@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Art Paradise - Minecraft Server</title>
   <style>
     * {
@@ -10,18 +10,55 @@
       padding: 0;
       box-sizing: border-box;
     }
-    body { 
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://i.ibb.co/bMwQKPQV/1313226.png') no-repeat center center fixed;
+      background: url('https://i.ibb.co/mr5dntXb/1313226.png') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      text-align: center;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       padding: 2rem;
       backdrop-filter: brightness(0.8);
+    }
+    #server-status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      color: white;
+      z-index: 1000;
+    }
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      background-color: grey;
+    }
+    section {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      margin: 2rem auto;
+      border-radius: 10px;
+      max-width: 800px;
+      color: white;
+      text-align: center;
+    }
+    section h2 {
+      margin-bottom: 1rem;
+    }
+    section ol {
+      text-align: left;
+      margin-left: 1.5rem;
+    }
+    section img {
+      margin-top: 1rem;
+      border-radius: 10px;
+      max-width: 100%;
+      height: auto;
     }
     h1 {
       font-size: 4rem;
@@ -58,12 +95,95 @@
       text-shadow: 1px 1px 4px #000;
       color: white;
     }
+
+    #support a {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #2ecc71;
+      text-decoration: underline;
+      background: none;
+      padding: 0;
+    }
+    #support a:hover {
+      color: #27ae60;
+    }
   </style>
 </head>
 <body>
-  <h1>Art Paradise</h1>
-  <p>Welcome to the ultimate Minecraft getaway – epic builds, and endless adventures await!</p>
-  <div class="ip">Server IP: <strong>mc.artparadise.uk</strong></div>
-  <a href="https://www.minecraft.net/en-us/download">Download Minecraft</a>
+
+  <div id="server-status">
+    <span class="status-dot" id="status-dot"></span>
+    <span id="status-text">Checking status...</span>
+  </div>
+
+  <section id="Introduction">
+    <h1>Art Paradise</h1>
+    <p>Welcome to the ultimate Minecraft getaway – epic builds, and endless adventures await!</p>
+    <div class="ip">Server IP: <strong>mc.artparadise.uk</strong></div>
+    <br>
+    <a href="https://www.minecraft.net/en-us/download"><strong>Download Minecraft</strong></a>
+  </section>
+
+  <section id="join-bedrock">
+    <h2>How to Join on Bedrock Edition</h2>
+    <ol>
+      <li>Open Minecraft on your device.</li>
+      <li>Click on "Play".</li>
+      <li>Navigate to the "Servers" tab.</li>
+      <li>Scroll down and click "Add Server".</li>
+      <li>Enter the server name: <strong>Art Paradise</strong></li>
+      <li>Enter the server address: <strong>mc.artparadise.uk</strong></li>
+      <li>Set the port to: <strong>19132</strong></li>
+      <li>Click "Save" and then select the server to join.</li>
+    </ol>
+    <img src="https://i.ibb.co/m5BwJbnc/Screenshot-2025-06-03-184457.png" alt="Bedrock Edition Join Guide">
+  </section>
+
+  <section id="join-java">
+    <h2>How to Join on Java Edition</h2>
+    <ol>
+      <li>Open the Minecraft Launcher and start the game.</li>
+      <li>Click on "Multiplayer".</li>
+      <li>Click "Add Server".</li>
+      <li>Enter the server name: <strong>Art Paradise</strong></li>
+      <li>Enter the server address: <strong>mc.artparadise.uk</strong></li>
+      <li>Click "Done" and then select the server to join.</li>
+    </ol>
+    <img src="https://i.ibb.co/XxCysWYJ/Screenshot-2025-06-03-184828.png" alt="Java Edition Join Guide">
+  </section>
+
+  <section id="support">
+    <h2>Need Support?</h2>
+    <p>Or want to report bugs? Reach out to us at:</p>
+    <a href="mailto:support@artparadise.uk">support@artparadise.uk</a>
+  </section>
+
+  <script>
+    async function updateServerStatus() {
+      const statusDot = document.getElementById('status-dot');
+      const statusText = document.getElementById('status-text');
+
+      try {
+        const response = await fetch('https://api.mcstatus.io/v2/status/java/mc.artparadise.uk');
+        const data = await response.json();
+
+        if (data.online) {
+          statusDot.style.backgroundColor = 'green';
+          statusText.textContent = 'Server Online';
+        } else {
+          statusDot.style.backgroundColor = 'red';
+          statusText.textContent = 'Server Offline';
+        }
+      } catch (error) {
+        statusDot.style.backgroundColor = 'orange';
+        statusText.textContent = 'Maintenance';
+      }
+    }
+
+    updateServerStatus();
+    setInterval(updateServerStatus, 60000);
+  </script>
+
 </body>
 </html>

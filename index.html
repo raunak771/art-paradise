@@ -361,8 +361,10 @@
       border-radius: var(--radius);
       border: 1px solid var(--border);
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
+      object-fit: cover;
+      min-height: 180px;
     }
 
     /* ─── DIVIDER ─── */
@@ -783,7 +785,7 @@
   <div class="gallery-header">
     <div>
       <p class="section-label">Community Creations</p>
-      <h2 style="margin-bottom:0">Build Gallery</h2>
+      <h2 style="margin-bottom:0">Build Gallery <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:400;color:var(--gold);letter-spacing:0.08em;vertical-align:middle;opacity:0.8">(work in progress)</span></h2>
     </div>
     <button class="btn-upload" onclick="openUploadModal()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
